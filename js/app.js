@@ -1,6 +1,8 @@
 // alert("It works!");
 console.log("Javascript running");
 
+var count = 0;
+
 // document.getElementById("plus")
 $(document).ready(function() {
 
@@ -8,8 +10,8 @@ $(document).ready(function() {
   var plusBtn = $("#plus");
   var minusBtn = $("#minus");
 
-  var savedCount = localStorage.getItem("count");
-  setCount(savedCount);
+  count = localStorage.getItem("count") || count;
+  render();
 
   function renderStyles(n) {
     if (n > 8) {
@@ -25,22 +27,22 @@ $(document).ready(function() {
     }
   }
 
-  function setCount(n) {
-    n = Number(n);
-    if (isNaN(n)) { n = 0 };
+  function render() {
+    count = Number(count);
+    if (isNaN(count)) { count = 0 };
 
-    localStorage.setItem("count", n);
-    countDiv.text(n);
-    renderStyles(n);
+    localStorage.setItem("count", count);
+    countDiv.text(count);
+    renderStyles(count);
   }
 
   plusBtn.click(function() {
-    var count = Number( countDiv.text() );
-    setCount(count + 1);
+    count += 1;
+    render();
   });
 
   minusBtn.click(function() {
-    var count = Number( countDiv.text() );
-    setCount(count - 1);
+    count -= 1;
+    render();
   });
 })
